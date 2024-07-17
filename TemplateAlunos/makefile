@@ -1,16 +1,21 @@
-parametrosCompilacao=-Wall -g #-Wshadow
-nomePrograma=trab
+parametrosCompilacao = -Wall -g -Wextra
+nomePrograma = trab
+fontes = main.c ordenacao.c pilha.c
+objetos = main.o ordenacao.o pilha.o
 
 all: $(nomePrograma)
 
-$(nomePrograma): main.o ordenacao.o
-	gcc -o $(nomePrograma) main.o ordenacao.o $(parametrosCompilacao)
+$(nomePrograma): $(objetos)
+	gcc -o $(nomePrograma) $(objetos) $(parametrosCompilacao)
 
-main.o: main.c
+main.o: main.c ordenacao.h pilha.h
 	gcc -c main.c $(parametrosCompilacao)
 
-ordenacao.o: ordenacao.h ordenacao.c
+ordenacao.o: ordenacao.c ordenacao.h pilha.h
 	gcc -c ordenacao.c $(parametrosCompilacao)
 
+pilha.o: pilha.c pilha.h
+	gcc -c pilha.c $(parametrosCompilacao)
+
 clean:
-	rm -f *.o *.gch $(nomePrograma)
+	rm -f *.o $(nomePrograma)
