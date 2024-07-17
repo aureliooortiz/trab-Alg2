@@ -1,4 +1,5 @@
 #include "ordenacao.h"
+#include "pilha.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,7 +65,10 @@ void merge(int v[], int64_t a, int64_t m,
 		i++;
 	}
 	copiar(v, a, b+1, aux);
+	printf("\nMerge aux[]:\n");
+	imprimeVetor(aux, b-a+1);
 	free(aux);
+	printf("sai merge\n\n");
 }
 
 void merge_sort(int v[], int64_t a, int64_t b,
@@ -72,11 +76,18 @@ void merge_sort(int v[], int64_t a, int64_t b,
 	int64_t m;
 	
 	if(a >= b){
+		printf("a = %ld, b = %ld\n", a, b);
+		printf("volta\n\n");
 		return;
 	}
+	printf("a = %ld, b = %ld\n", a, b);
 	m = (a+b) / 2;
+	printf("m = %ld\n", m);
+	printf("(a, m)\n\n");
 	merge_sort(v, a, m, comp);
+	printf("(m+1)\n\n");
 	merge_sort(v, m+1, b, comp);
+	printf("entra merge\n");
 	merge(v, a, m, b, comp);
 }
 
@@ -144,7 +155,7 @@ int64_t direita(int64_t i){
 	return (2*i)+1;
 }
 
-void max_heapifyRec(int v[], int64_t ind, int64_t n, 
+void max_heapify(int v[], int64_t ind, int64_t n, 
 						uint64_t *comp) {
 	int64_t l, r;
 	int64_t maior;
@@ -161,17 +172,10 @@ void max_heapifyRec(int v[], int64_t ind, int64_t n,
 	if( (r <= n) && (v[r] > v[maior]) ) {
 		maior = r;
 	}
-	/*
-	printf("\ninter: %lu\n", *comp);
-	printf("\nind: %ld\n", ind);
-	printf("\nl: %ld\n", l);
-	printf("\nr:%ld\n", r);
-	printf("\nmaior: %ld\n", maior);
-	*/
+	
 	if(maior != ind) {
 		trocar(v, ind, maior);
-		//imprimeVetor(v, n+1);
-		max_heapifyRec(v, maior, n, comp);
+		max_heapify(v, maior, n, comp);
 	}
 
 }
@@ -179,8 +183,7 @@ void max_heapifyRec(int v[], int64_t ind, int64_t n,
 void construir_max_heap(int v[], int64_t n, uint64_t *numComp){
 
 	for(int64_t i = n/2; i >= 0; i--) {
-		//printf("\nFora de mH i: = %ld\n", i);
-		max_heapifyRec(v, i, n, numComp);
+		max_heapify(v, i, n, numComp);
 	}
 }
 
@@ -190,7 +193,7 @@ void heap_sort(int v[], int64_t n, uint64_t *numComp){
 	
 	for(uint64_t j = n; j >= 1; j--){
 		trocar(v, 0, j);
-		max_heapifyRec(v, 0, j-1, numComp);
+		max_heapify(v, 0, j-1, numComp);
 	}
 }
 
@@ -202,19 +205,119 @@ uint64_t heapSort(int vetor[], size_t tam) {
 
     return numComp;
 }
-/*
+
+void merge_sortSR(int v[], int64_t a, int64_t b,
+					uint64_t *comp){
+	int64_t m;
+	
+	if(a >= b){
+		return;
+	}
+	m = (a+b) / 2;
+	merge_sort(v, a, m, comp);
+	merge_sort(v, m+1, b, comp);
+	merge(v, a, m, b, comp); 
+
+}
+
 uint64_t mergeSortSR(int vetor[], size_t tam) {
-    vetor[0] = 99;
-    return -1;
+	uint64_t numComp;
+
+	numComp = 0;
+	merge_sortSR(vetor, 0, tam-1, &numComp);
+	
+	return numComp;
+}
+
+
+void quick_sortSR(int v[], int64_t a, int64_t b, uint64_t *comp) {
+	struct pilha *p;
+	int64_t m;
+	
+	p = pilha_cria();
+	if(!p){
+		printf("\nErro ao criar pilha\n");	
+		return;
+	}
+	push(p, a);
+	push(p, b);
+	while( !pilha_vazia(p) ) {
+		pop(p, &b);
+		pop(p, &a);
+		if( a < b ) {
+			m = particionar(v, a, b, comp);
+			push(p, a);
+			push(p, m-1);
+			push(p, m+1);
+			push(p, b);
+		}
+	}
+	
+	pilha_destroi(&p);
 }
 
 uint64_t quickSortSR(int vetor[], size_t tam) {
-    vetor[0] = 99;
-    return -1;
+	uint64_t numComp;
+	
+	numComp = 0;
+	quick_sortSR(vetor, 0, tam-1, &numComp);
+	
+	return numComp;
+}
+
+void max_heapifySR(int v[], int64_t ind, int64_t n, 
+						uint64_t *comp) {
+	int64_t l, r;
+	int64_t maior;
+	int64_t j;
+	
+	j = 1;
+	// irá executar uma vez, mas se necessário continua o loop até não precisar
+	for(int64_t i = 0; i < j; i++){
+		l = esquerda(ind);
+		r = direita(ind);
+		(*comp)++;
+		if( ( l <= n) && (v[l] > v[ind]) ){
+			maior = l;
+		}else {
+			maior = ind;
+		}
+
+		if( (r <= n) && (v[r] > v[maior]) ) {
+			maior = r;
+		}
+	
+		if(maior != ind) {
+			trocar(v, ind, maior);
+			ind = maior;
+			// o loop irá executar mais uma vez
+			j++;
+		}
+	}
+}
+
+void construir_max_heapSR(int v[], int64_t n, uint64_t *numComp){
+
+	for(int64_t i = n/2; i >= 0; i--) {
+		max_heapifySR(v, i, n, numComp);
+	}
+}
+
+void heap_sortSR(int v[], int64_t n, uint64_t *numComp){
+	
+	construir_max_heapSR(v, n, numComp);
+	
+	for(uint64_t j = n; j >= 1; j--){
+		trocar(v, 0, j);
+		max_heapifySR(v, 0, j-1, numComp);
+	}
 }
 
 uint64_t heapSortSR(int vetor[], size_t tam) {
-    vetor[0] = 99;
-    return -1;
+   uint64_t numComp;
+    
+    numComp = 0;
+	heap_sortSR(vetor, tam-1, &numComp);
+
+    return numComp;
 }
-*/
