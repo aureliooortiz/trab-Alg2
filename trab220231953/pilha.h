@@ -1,60 +1,34 @@
-/*
- * TAD pilha
- * -> versao com lista ligada com nodo cabeca
- * Autores:
- *    Andre Ricardo Abed Gregio
- *    Marcos Alexandre Castilho
- *    Luis Carlos Erpen de Bona
- *
- * Versao 2.0.0 de 25/09/2023
-*/
+#ifndef PILHA_H_
+#define PILHA_H_
 
-#ifndef _pilha_t_H
-#define _pilha_t_H
+#include <stdlib.h>
 
-struct nodo {
-    int chave;
-    struct nodo *prox;
-};
+// Pilha focada em indices
+struct pilha{
+    size_t altura;
+    size_t topo;
+    
+    int *valor;
+} ;
 
-struct pilha {
-    struct nodo *topo;
-    int tamanho;
-};
+// Inicializa a pilha, com altura e memoria
+unsigned int pilha_cria(struct pilha *p, size_t tamanho); // Retorna 1 para ERRO
 
-/* 
- * Cria e retorna uma nova pilha.
- * Retorna NULL em caso de erro de alocação.
-*/
-struct pilha *pilha_cria ();
+// Destroi a pilha
+void pilha_destroi(struct pilha *p);
 
-/* Desaloca toda memoria da pilha e faz pilha receber NULL. */
-void pilha_destroi (struct pilha **pilha);
+// Nao verifica se eh impossivel empilhar
+void push(struct pilha *p, int64_t valor);
 
-/* 
- * Insere dado na pilha (politica LIFO). Retorna 1
- * em caso de sucesso e 0 em caso de falha.
-*/
-int push (struct pilha *pilha, int64_t dado);
+// Nao verifica se eh impossivel desempilhar
+// Retorna o desempilhado (int)
+int pop(struct pilha *p);
 
-/* 
- * Remove o topo (politica LIFO) e retorna o elemento 
- * no parametro dado. A funcao retorna 1 em caso de 
- * sucesso e 0 no caso da pilha estar vazia.
-*/
-int pop (struct pilha *pilha, int64_t *dado);
- 
-/* 
- * Similar ao pop, mas retorna o elemento dado sem remove-lo. 
- * A funcao retorna 1 em caso de sucesso e 0 no caso 
- * da pilha estar vazia.
-*/
-int pilha_topo (struct pilha *pilha, int64_t *dado); 
+/**
+ * Verifica se a pilha esta vazia
+ * Retorna 1 para VAZIA
+ * Retorna 0 para NAO VAZIA
+ * */
+unsigned int pilha_vazia(struct pilha p);
 
-/* Retorna o numero de elementos da pilha, que pode ser 0. */
-int pilha_tamanho (struct pilha *pilha);
-
-/* Retorna 1 se pilha vazia, 0 em caso contrario. */ 
-int pilha_vazia (struct pilha *pilha);
-
-#endif
+#endif // PILHA_H_

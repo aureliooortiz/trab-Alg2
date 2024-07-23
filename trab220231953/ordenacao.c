@@ -203,25 +203,24 @@ uint64_t mergeSortSR(int vetor[], size_t tam) {
 
 
 void quick_sortSR(int v[], int64_t a, int64_t b, uint64_t *comp) {
-	struct pilha *p;
+	struct pilha p;
 	int64_t m;
 	
-	p = pilha_cria();
-	if(!p){
+	if( pilha_cria(&p, b-a+1) ){
 		printf("\nErro ao criar pilha\n");	
 		return;
 	}
-	push(p, a);
-	push(p, b);
+	push(&p, a);
+	push(&p, b);
 	while( !pilha_vazia(p) ) {
-		pop(p, &b);
-		pop(p, &a);
+		b = pop(&p);
+		a = pop(&p);
 		if( a < b ) {
 			m = particionar(v, a, b, comp);
-			push(p, a);
-			push(p, m-1);
-			push(p, m+1);
-			push(p, b);
+			push(&p, a);
+			push(&p, m-1);
+			push(&p, m+1);
+			push(&p, b);
 		}
 	}
 	
