@@ -1,5 +1,5 @@
 parametrosCompilacao = -Wall -g -Wextra
-nomePrograma = trab
+nomePrograma = trab220231953
 fontes = main.c ordenacao.c pilha.c
 objetos = main.o ordenacao.o pilha.o
 

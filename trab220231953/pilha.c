@@ -78,7 +78,7 @@ int pop (struct pilha *pilha, int64_t *dado){
  * A funcao retorna 1 em caso de sucesso e 0 no caso 
  * da pilha estar vazia.
 */
-int pilha_topo (struct pilha *pilha, int *dado){
+int pilha_topo (struct pilha *pilha, int64_t *dado){
 	if(!pilha) return 0;
 	/* retorna 0 no caso da pilha estar vazia */
 	if(pilha->tamanho == 0) return 0;

@@ -15,13 +15,6 @@ void getNome(char nome[]) {
 // a função a seguir deve retornar o seu número de GRR
 uint32_t getGRR() { return 20231953; }
 
-void imprimeVetor(int vetor[], int64_t tam){
-	for(int i = 0; i < tam; i++){
-		printf("%d ",vetor[i]);
-	}
-	printf("\n");
-}
-
 void copiar(int v[], int64_t a, int64_t b, int aux[]){
 	int64_t i, j;
 	
@@ -36,9 +29,8 @@ void merge(int v[], int64_t a, int64_t m,
 				int64_t b, uint64_t *comp) {
 	int64_t p1, p2;
 	int64_t i, j;
-	int *aux;
-	
-	aux = malloc((b+1) * sizeof(int));
+
+	int *aux = (int*)malloc( (b+1) * sizeof(int) );
     if (aux == NULL) {
         printf("Falha fatal. Impossível alocar memoria.\n");
         return;
@@ -65,10 +57,8 @@ void merge(int v[], int64_t a, int64_t m,
 		i++;
 	}
 	copiar(v, a, b+1, aux);
-	printf("\nMerge aux[]:\n");
-	imprimeVetor(aux, b-a+1);
+
 	free(aux);
-	printf("sai merge\n\n");
 }
 
 void merge_sort(int v[], int64_t a, int64_t b,
@@ -76,18 +66,13 @@ void merge_sort(int v[], int64_t a, int64_t b,
 	int64_t m;
 	
 	if(a >= b){
-		printf("a = %ld, b = %ld\n", a, b);
-		printf("volta\n\n");
 		return;
 	}
-	printf("a = %ld, b = %ld\n", a, b);
+
 	m = (a+b) / 2;
-	printf("m = %ld\n", m);
-	printf("(a, m)\n\n");
 	merge_sort(v, a, m, comp);
-	printf("(m+1)\n\n");
 	merge_sort(v, m+1, b, comp);
-	printf("entra merge\n");
+	
 	merge(v, a, m, b, comp);
 }
 
@@ -123,7 +108,7 @@ int64_t particionar(int v[], int64_t a, int64_t b, uint64_t *comp){
 		}	
 	}
 	trocar(v, m, b);
-
+	
 	return m;
 }
 
@@ -206,25 +191,12 @@ uint64_t heapSort(int vetor[], size_t tam) {
     return numComp;
 }
 
-void merge_sortSR(int v[], int64_t a, int64_t b,
-					uint64_t *comp){
-	int64_t m;
-	
-	if(a >= b){
-		return;
-	}
-	m = (a+b) / 2;
-	merge_sort(v, a, m, comp);
-	merge_sort(v, m+1, b, comp);
-	merge(v, a, m, b, comp); 
-
-}
-
 uint64_t mergeSortSR(int vetor[], size_t tam) {
 	uint64_t numComp;
 
-	numComp = 0;
-	merge_sortSR(vetor, 0, tam-1, &numComp);
+	numComp = -1;
+	vetor[tam-1] = 10;
+	printf("Não consegui fazer\n");
 	
 	return numComp;
 }
