@@ -27,8 +27,9 @@ int main() {
 	printf("Trabalho de %s\n", nome);
 	printf("GRR %u\n", getGRR());
 	
+	int64_t tamVetor = 1000000; // 1M
+	
 	for (int i = 0; i < 4; i++) {
-    	int64_t tamVetor = 1000000;
     	int* vetor = (int*)malloc( tamVetor * sizeof(int) );
     	if (vetor == NULL) {
     	    printf("Falha fatal. Impossível alocar memoria.");
@@ -79,13 +80,13 @@ int main() {
 		
 		switch (i) {
 			case 1:
-				tamVetor = 10.000.000;
+				tamVetor = 10000000; //10M
 				break; 
 			case 2:
-				tamVetor = 100.000.000;
+				tamVetor = 100000000; //100M
 				break;
 			case 3:
-				tamVetor = 1.000.000.000;
+				tamVetor = 1000000000; //1B
 				break;
 		}
 	}	

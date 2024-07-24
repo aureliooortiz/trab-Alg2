@@ -61,8 +61,7 @@ void merge(int v[], int64_t a, int64_t m,
 	free(aux);
 }
 
-void merge_sort(int v[], int64_t a, int64_t b,
-					uint64_t *comp){
+void merge_sort(int v[], int64_t a, int64_t b, uint64_t *comp){
 	int64_t m;
 	
 	if(a >= b){
@@ -132,12 +131,12 @@ uint64_t quickSort(int vetor[], size_t tam) {
 	return numComp;
 }
 
-int64_t esquerda(int64_t i){
+int64_t esquerda(int64_t i){ 
 	return 2*i;
 }
 
-int64_t direita(int64_t i){
-	return (2*i)+1;
+int64_t direita(int64_t i){ 
+	return (2*i)+1; 
 }
 
 void max_heapify(int v[], int64_t ind, int64_t n, 
@@ -285,7 +284,7 @@ void heap_sortSR(int v[], int64_t n, uint64_t *numComp){
 }
 
 uint64_t heapSortSR(int vetor[], size_t tam) {
-   uint64_t numComp;
+	uint64_t numComp;
     
     numComp = 0;
 	heap_sortSR(vetor, tam-1, &numComp);
