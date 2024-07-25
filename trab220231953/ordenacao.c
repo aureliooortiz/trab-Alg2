@@ -6,10 +6,10 @@
 #include <string.h>
 
 void getNome(char nome[]) {
-    // substitua por seu nome
-    strncpy(nome, "Aurelio Gabriel Ortiz Vieira", MAX_CHAR);
-    // adicionada terminação manual para caso de overflow
-    nome[MAX_CHAR - 1] = '\0';
+	// substitua por seu nome
+	strncpy(nome, "Aurelio Gabriel Ortiz Vieira", MAX_CHAR);
+	// adicionada terminação manual para caso de overflow
+	nome[MAX_CHAR - 1] = '\0';
 }
 
 // a função a seguir deve retornar o seu número de GRR
@@ -25,16 +25,15 @@ void copiar(int v[], int64_t a, int64_t b, int aux[]){
 	}
 }
 
-void merge(int v[], int64_t a, int64_t m, 
-				int64_t b, uint64_t *comp) {
+void merge(int v[], int64_t a, int64_t m, int64_t b, uint64_t *comp) {
 	int64_t p1, p2;
 	int64_t i, j;
 
 	int *aux = (int*)malloc( (b+1) * sizeof(int) );
-    if (aux == NULL) {
-        printf("Falha fatal. Impossível alocar memoria.\n");
-        return;
-    }
+	if (aux == NULL) {
+		printf("Falha fatal. Impossível alocar memoria.\n");
+		return;
+	}
 	
 	if(a >= b){
 		return;
@@ -139,8 +138,7 @@ int64_t direita(int64_t i){
 	return (2*i)+1; 
 }
 
-void max_heapify(int v[], int64_t ind, int64_t n, 
-						uint64_t *comp) {
+void max_heapify(int v[], int64_t ind, int64_t n, uint64_t *comp) {
 	int64_t l, r;
 	int64_t maior;
 	
@@ -161,7 +159,6 @@ void max_heapify(int v[], int64_t ind, int64_t n,
 		trocar(v, ind, maior);
 		max_heapify(v, maior, n, comp);
 	}
-
 }
 
 void construir_max_heap(int v[], int64_t n, uint64_t *numComp){
@@ -182,12 +179,12 @@ void heap_sort(int v[], int64_t n, uint64_t *numComp){
 }
 
 uint64_t heapSort(int vetor[], size_t tam) {
-    uint64_t numComp;
+	uint64_t numComp;
     
-    numComp = 0;
+	numComp = 0;
 	heap_sort(vetor, tam-1, &numComp);
 
-    return numComp;
+	return numComp;
 }
 
 uint64_t mergeSortSR(int vetor[], size_t tam) {
@@ -235,8 +232,7 @@ uint64_t quickSortSR(int vetor[], size_t tam) {
 	return numComp;
 }
 
-void max_heapifySR(int v[], int64_t ind, int64_t n, 
-						uint64_t *comp) {
+void max_heapifySR(int v[], int64_t ind, int64_t n, uint64_t *comp) {
 	int64_t l, r;
 	int64_t maior;
 	int64_t j;
@@ -286,8 +282,8 @@ void heap_sortSR(int v[], int64_t n, uint64_t *numComp){
 uint64_t heapSortSR(int vetor[], size_t tam) {
 	uint64_t numComp;
     
-    numComp = 0;
+	numComp = 0;
 	heap_sortSR(vetor, tam-1, &numComp);
 
-    return numComp;
+	return numComp;
 }

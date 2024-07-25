@@ -6,7 +6,7 @@
 
 void aleatorizaVet(int vetor[], int64_t tam){
 	for(int i = 0; i < tam; i++){
-		vetor[i] = rand() % 101;
+		vetor[i] = rand() % 147483647;
 	}
 }
 
@@ -18,10 +18,10 @@ void imprimeVet(int vetor[], int64_t tam){
 }
 
 int main() {
-    srand(-10);
+	srand(0);
     
-    char nome[MAX_CHAR];
-    uint64_t numComp;
+	char nome[MAX_CHAR];
+	uint64_t numComp;
 	
 	getNome(nome);
 	printf("Trabalho de %s\n", nome);
@@ -91,5 +91,5 @@ int main() {
 		}
 	}	
 		
-    return 0;
+	return 0;
 }
